@@ -17,13 +17,13 @@ async function AllProductsScrape() {
         const descSelector = "div > div > a";
         return {
           src: x.querySelector(srcSelector).getAttribute("src"),
-          desc: x.querySelector(descSelector).getAttribute("title"),
+          shortDesc: x.querySelector(descSelector).getAttribute("title"),
           productUrl: x.querySelector(descSelector)?.getAttribute("href"),
         };
       });
       return data;
     });
-    // console.log(typeof scrapedData, scrapedData);
+    // console.log(scrapedData);
     await browser.close();
     return scrapedData;
   } catch (e) {
@@ -31,4 +31,4 @@ async function AllProductsScrape() {
   }
 }
 
-exports.allProductsScrape = AllProductsScrape();
+module.exports = AllProductsScrape;
