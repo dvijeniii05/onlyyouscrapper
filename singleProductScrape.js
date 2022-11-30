@@ -12,8 +12,7 @@ async function SingleProductScrape(productUrl) {
     await page.click(buttonSelector);
 
     const scrapedData = await page.evaluate(() => {
-      const allData = document.querySelector("div#contentOmnipresent");
-
+      const allData = document.querySelector("div#contentOmnipresent div");
       return allData.innerHTML;
     });
     console.log(scrapedData);

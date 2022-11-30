@@ -11,7 +11,7 @@ router.get("/:productUrl", async (req, res) => {
   console.log("POST_CALLED");
   const productUrl = req.params.productUrl;
   const fullDesc = await singleProductScrape(req.params.productUrl);
-  console.log(fullDesc);
+  // console.log(fullDesc);
   res.send({ fullDesc, productUrl });
 });
 
