@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
 async function AllProductsScrape() {
-  console.log("POST_SINGLE");
+  console.log("POST_ALL");
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -14,23 +14,25 @@ async function AllProductsScrape() {
     const scrapedData = await page.evaluate(() => {
       const allData = document.querySelectorAll("li.estore_product_container");
       const data = Object.values(allData).map((x) => {
-        const srcSelector = "div > a > img.product_img";
-        const descSelector = "div > a";
-        const ratingSelector = "div:nth-child(2) > span";
-        const firstElement = x.querySelectorAll("div")[1];
         const secondElement = x.querySelectorAll("div")[2];
+        const thirdElement = x.querySelectorAll("div")[3];
+        // const secondElementNested = secondElement.querySelectorAll("div")[2];
+
+        const srcSelector = "div > div > a > img.product_img";
+        const descSelector = "div > div > a";
+        const ratingStarsSelector =
+          "div.product_top_section > div.product_rating > span";
+        const ratingVotesSelector =
+          "div.product_top_section > div.product_rating > a";
 
         return {
-          src: firstElement.querySelector(srcSelector).getAttribute("src"),
-          shortDesc: firstElement
-            .querySelector(descSelector)
-            .getAttribute("title"),
-          productUrl: firstElement
-            .querySelector(descSelector)
-            ?.getAttribute("href"),
-          ratingStars: secondElement
-            .querySelector(ratingSelector)
-            .getAttribute("title"),
+          src: x.querySelector(srcSelector).getAttribute("src"),
+          shortDesc: x.querySelector(descSelector).getAttribute("title"),
+          productUrl: x.querySelector(descSelector)?.getAttribute("href"),
+          ratingStars: x
+            .querySelector(ratingStarsSelector)
+            ?.getAttribute("class"),
+          ratingVotes: x.querySelector(ratingVotesSelector)?.textContent,
         };
       });
       return data;

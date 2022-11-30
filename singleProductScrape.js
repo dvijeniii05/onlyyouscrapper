@@ -15,7 +15,6 @@ async function SingleProductScrape(productUrl) {
       const allData = document.querySelector("div#contentOmnipresent div");
       return allData.innerHTML;
     });
-    console.log(scrapedData);
     return scrapedData;
   } catch (e) {
     console.log(e);
