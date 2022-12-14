@@ -3,9 +3,12 @@ const router = express.Router();
 
 const allProductsScrape = require("../allProductsScraper");
 
-router.get("/", async (req, res) => {
-  const allProducts = await allProductsScrape();
-  res.send(allProducts.slice(0, 9));
+router.get("/:skinTypes", async (req, res) => {
+  const parsedArray = JSON.parse(req.params.skinTypes);
+  console.log("Types", parsedArray);
+  const allProducts = await allProductsScrape(parsedArray);
+  console.log("RESPONSE", allProducts[0].slice(0, 2));
+  res.send(allProducts[0].slice(0, 9));
   // res.send(200);
 });
 
