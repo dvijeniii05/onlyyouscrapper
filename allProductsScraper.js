@@ -1,5 +1,7 @@
 const puppeteer = require("puppeteer");
 
+const shuffle = require("./durstenfeldShuffle");
+
 async function AllProductsScrape(skinTypesArray) {
   console.log("ALL_PRODUCTS_SCRAPE CALLED");
   const totalScrapedData = [];
@@ -56,8 +58,14 @@ async function AllProductsScrape(skinTypesArray) {
       console.log(e);
     }
   }
-  await fromOneUrl(skinTypesArray[0]);
-  return totalScrapedData;
+  for (let i = 0; i < skinTypesArray.length; i++) {
+    await fromOneUrl(skinTypesArray[i]);
+  }
+  console.log(totalScrapedData[0].slice(0, 5));
+  const scrapedDataArray = totalScrapedData[0];
+  shuffle(scrapedDataArray);
+  console.log(scrapedDataArray.slice(0, 5));
+  // return totalScrapedData;
 }
 
 module.exports = AllProductsScrape;
