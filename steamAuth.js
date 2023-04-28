@@ -27,7 +27,9 @@ app.get("/auth/steam/authenticate", async (req, res) => {
     const user = await steam.authenticate(req);
     console.log("USER", user);
     const string = encodeURIComponent(user.steamid);
-    return res.redirect("/steamid/?id=" + string);
+    const converted = string.substr(-16, 16) - 6561197960265728;
+    console.log("32_ID", converted);
+    return res.redirect("/steamid/?id=" + converted);
     //...do something with the data
   } catch (error) {
     console.error(error);
